@@ -25,6 +25,13 @@ The rise of agentic AI marks a transformative leap in how artificial intelligenc
 git clone https://github.com/mwaseem75/iris-AgenticAI.git
 ```
 
+## Requirement
+Application requires OpenAI API Key, sign up for OpenAI API on [this page](https://platform.openai.com/account/api-keys). Once you have signed up and logged in, click on Personal, and select View API keys in drop-down menu. Create and copy the API Key
+![image](https://github.com/mwaseem75/irisChatGPT/assets/18219467/7e7c7880-b9ac-4a60-9ec9-289dd2375a73)
+
+Create a .env file in the root directory and add your OpenAI API key:
+![image](https://github.com/user-attachments/assets/c610f65a-6a33-4fcb-a12f-7b4895728da3)
+
 2. Open a Docker terminal in this directory and run:
 
 ```
@@ -36,11 +43,7 @@ docker-compose build
 ```
 docker-compose up -d 
 ```
-# Getting Started 
-## Get OpenAI Key
-Application requires OpenAI API Key, sign up for OpenAI API on [this page](https://platform.openai.com/account/api-keys). Once you have signed up and logged in, click on Personal, and select View API keys in drop-down menu. Create and copy the API Key
 
-![image](https://github.com/mwaseem75/irisChatGPT/assets/18219467/7e7c7880-b9ac-4a60-9ec9-289dd2375a73)
 
 ## Run Chainlit Web Application
 To run the application Navigate to [**http://localhost:8002**](http://localhost:8002) 
