@@ -1,0 +1,9 @@
+zn "%SYS"
+// Unexpire passwords and set up passwordless mode to simplify dev use.
+do ##class(Security.Users).UnExpireUserPasswords("*")
+zn "USER"
+// this should be the place for individual application code.
+do $System.OBJ.LoadDir("/irisdev/app/src/","ck",,1)
+
+//zpm "load /irisdev/app -v":1:1
+halt

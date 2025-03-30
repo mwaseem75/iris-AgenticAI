@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25">
+  <Document name="iris-AgenticAI.ZPM">
+    <Module>
+      <Name>iris-AgenticAI</Name>
+      <Description>iris-AgenticAI</Description>
+      <Version>0.0.1</Version>
+      <Packaging>module</Packaging>      
+      <SourcesRoot>src</SourcesRoot>
+      <Resource Name="dc.AAI.PKG"/>
+    </Module>
+  </Document>
+</Export>
