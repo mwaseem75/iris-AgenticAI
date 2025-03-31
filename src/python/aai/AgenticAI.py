@@ -155,7 +155,7 @@ async def start():
     dashboard_agent = Agent(
             name="DashboardAgent",
             instructions="Assist to provide managment portal dashboard details.\
-            ApplicationErrors,CSPSessions,CacheEfficiency,ref.DatabaseSpace,DiskReads,DiskWrites,\
+            ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,\
 		    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,\
 		    JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurrentPct,\
 		    LicenseHigh,LicenseHighPct,LicenseLimit,LicenseType,LockTable,.LogicalReads,Processes,\
@@ -205,9 +205,15 @@ async def start():
     cl.user_session.set("chat_history", [])
     cl.user_session.set("config", config)      
     cl.user_session.set("agent", triage_agent)
-   
-
-    await cl.Message(content="Welcome to the IRIS AI Assistant! How can I help you today?").send()
+    
+     
+    WelcomeMsg = "Welcome to the IRIS AI Assistant! I can assist you to provide:\n" \
+                "- IRIS Management Portal dashboard information\n" \
+                "- Information about currently running processes\n" \
+                "- Production status.\n" \
+                "- Websearch functionality." 
+            
+    await cl.Message(content=WelcomeMsg).send()
    
     
 
