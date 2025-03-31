@@ -46,8 +46,9 @@ docker-compose up -d
 
 
 ## Run Chainlit Web Application
-To run the application Navigate to [**http://localhost:8002**](http://localhost:8002) 
-![image](https://github.com/user-attachments/assets/31b89b5c-5c81-4b7f-aa90-9997ae9092b8)
+To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8002) 
+![image](https://github.com/user-attachments/assets/71a7d091-b7d0-4650-b0a9-1439363bb47f)
+
 
 
 
