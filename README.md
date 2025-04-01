@@ -1,5 +1,7 @@
 # Iris-AgenticAI
-The rise of agentic AI marks a transformative leap in how artificial intelligence interacts with the world—moving beyond static responses to dynamic, goal-driven problem-solving. Powered by [OpenAI’s Agentic SDK](https://openai.github.io/openai-agents-python/)) , this application showcases the next generation of autonomous AI systems capable of reasoning, collaborating, and executing complex tasks with human-like adaptability.
+The rise of agentic AI marks a transformative leap in how artificial intelligence interacts with the world—moving beyond static responses to dynamic, goal-driven problem-solving. Powered by [OpenAI’s Agentic SDK](https://openai.github.io/openai-agents-python/)), The OpenAI Agents SDK enables you to build agentic AI apps in a lightweight, easy-to-use package with very few abstractions. It's a production-ready upgrade of our previous experimentation for agents, Swarm. 
+
+This application showcases the next generation of autonomous AI systems capable of reasoning, collaborating, and executing complex tasks with human-like adaptability. 
 
 [![one](https://img.shields.io/badge/Platform-InterSystems%20IRIS-blue)](https://www.intersystems.com/data-platform/) [![one](https://img.shields.io/badge/LLM-GPT-Purple)](https://openai.com/index/gpt-3-apps/) [![one](https://img.shields.io/badge/WebFramework-Chainlit-teal)](https://https://docs.chainlit.io/get-started/overview/) [![one](https://img.shields.io/badge/SDK-OpenAI%20Agentic%20SDK-Orange)](https://openai.github.io/openai-agents-python/) [![one](https://img.shields.io/badge/ORM-SQLAlchemy-teal)](https://www.sqlalchemy.org/)  [![one](https://img.shields.io/badge/OpenAI-ChatGPT-yellow)](https://openai.com/) [![OEX](https://img.shields.io/badge/Available%20on-Intersystems%20Open%20Exchange-00b2a9.svg)](https://github.com/mwaseem75/iris-RAG-Gen/blob/main/LICENSE) [![license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/mwaseem75/iris-RAG-Gen/blob/main/LICENSE)
 
@@ -50,17 +52,6 @@ docker-compose up -d
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8002) 
 ![image](https://github.com/user-attachments/assets/71a7d091-b7d0-4650-b0a9-1439363bb47f)
 
-## About OpenAI Agents SDK
-The OpenAI Agents SDK enables you to build agentic AI apps in a lightweight, easy-to-use package with very few abstractions. It's a production-ready upgrade of our previous experimentation for agents, Swarm.
-
-####  Main features of the SDK:
-Agent loop: Built-in agent loop that handles calling tools, sending results to the LLM, and looping until the LLM is done.
-Python-first: Use built-in language features to orchestrate and chain agents, rather than needing to learn new abstractions.
-Handoffs: A powerful feature to coordinate and delegate between multiple agents.
-Guardrails: Run input validations and checks in parallel to your agents, breaking early if the checks fail.
-Function tools: Turn any Python function into a tool, with automatic schema generation and Pydantic-powered validation.
-Tracing: Built-in tracing that lets you visualize, debug and monitor your workflows, as well as use the OpenAI suite of evaluation, fine-tuning and distillation tools.
-
 #### Agent
 Agents are the core building block in your apps. An agent is a large language model (LLM), configured with instructions and tools.
 Basic configuration
@@ -84,16 +75,15 @@ agent = Agent(
     tools=[get_weather],
 )
 ```
-our application contains 7 agents
-![image](https://github.com/user-attachments/assets/7dae8064-0ba2-42be-bb09-561e9df755e7)
-
--
--
--
--
--
--
--
+Application contains 7 agents:
+* **Triage Agent** : Main agent receives user input and delegates to other agent by using handoffs
+* **IRIS Dashboard Agent**: Assist in providing below management portal dashboard details:
+( ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,
+JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurrentPct,		    LicenseHigh,LicenseHighPct,LicenseLimit,LicenseType,LockTable,.LogicalReads,Processes,		    RouRefs,SeriousAlerts,ShadowServer,ShadowSource,SystemUpTime,WriteDaemon)  
+* **IRIS Running Process Agent**: Assist to provide IRIS running processes details.(Process ID, NameSpace, Routine, state, PidExternal)
+* **IRIS Production Agent**: Assist to provide Production informatoin
+* **WebSearch Agent** : Perform web searches to find relevant information.
+* **Order Agent** : Check the status of an order with the given order ID. 
 
 #### handoffs
 Handoffs allow an agent to delegate tasks to another agent. This is particularly useful in scenarios where different agents specialize in distinct areas. For example, a customer support app might have agents that each specifically handle tasks like order status, refunds, FAQs, etc.
