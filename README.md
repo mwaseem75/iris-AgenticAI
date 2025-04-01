@@ -144,7 +144,7 @@ Below is the command to start MCP server in case if server is not started
 ```
 uv run python /irisdev/app/src/python/aai/runMCPServer.py
 ```
-MCP Server is running on port 8000
+MCP Server is running at https://localhost:8000/sse
 ![image](https://github.com/user-attachments/assets/359c623b-0aab-45e1-a78f-610d93b4131d)
 
 
