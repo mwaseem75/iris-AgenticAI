@@ -8,17 +8,16 @@ The rise of agentic AI marks a transformative leap in how artificial intelligenc
 ![image](https://github.com/user-attachments/assets/6525c638-4708-4eb8-9b83-6411d8592d6a)
 
 
-
 # Application Interface
 ![image](https://github.com/user-attachments/assets/31b89b5c-5c81-4b7f-aa90-9997ae9092b8)
 
 # Features
-* IRIS Management Portal Dashboard Agent
-* IRIS Running Process Monitoring Agent
-* IRIS Production Information Agent
-* WebSearch Agent
-* Local Functional Agent
-* Model context protocol (MCP) functionality
+* **Agent loop**: Built-in agent loop that handles calling tools, sending results to the LLM, and looping until the LLM is done
+* **Python-first**: Use built-in language features to orchestrate and chain agents.
+* **Handoffs**: A powerful feature to coordinate and delegate between multiple agents.
+* **Function tools**: Turn any Python function into a tool
+* **Tracing**: Built-in tracing that lets you visualize, debug and monitor your workflows
+* **MCP Servers**: Stdio and HTTP over SSEModel Model context protocol (MCP) servers support.
 
 # Installation
 1. Clone/git pull the repo into any local directory
