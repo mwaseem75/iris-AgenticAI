@@ -85,7 +85,7 @@ JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurr
 * **WebSearch Agent** : Perform web searches to find relevant information.
 * **Order Agent** : Check the status of an order with the given order ID. 
 
-#### handoffs
+#### Handoffs
 Handoffs allow an agent to delegate tasks to another agent. This is particularly useful in scenarios where different agents specialize in distinct areas. For example, a customer support app might have agents that each specifically handle tasks like order status, refunds, FAQs, etc.
 
 Triage agent is our main agent which delegate tasks to another agent based on user input
@@ -105,12 +105,13 @@ triage_agent = Agent(
 
 ```
 
-Ask about IRIS licence information
+User asked two questions, Triage agent receive the input and delegate 1st question  to IRIS dashboard agent and 2nd question to IRIS Running process agent:
 ![image](https://github.com/user-attachments/assets/8db9904b-ffb3-458e-b952-6c386e8d4c69)
 
+User asked two questions, Triage agent receive the input and delegate 1st question  to IRIS production agent and 2nd question to Local Agent
 ![image](https://github.com/user-attachments/assets/a1f95ac7-7274-4ba0-a28f-bfe69b5abe65)
 
-Websearch Tool
+User asked two questions, Triage agent receive the input and delegate both questions to WebSearch Agent.
 ![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
 
 ### Tracing
@@ -123,7 +124,8 @@ https://platform.openai.com/logs
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8001) 
 ![image](https://github.com/user-attachments/assets/3a911108-bc52-473b-9b16-bfe8581f3c3f)
 
-
+Application communicate to MCP server which is running at localhost
+Below is the command to start MCP server in case if server is not started
 in case of below error, start application manually by using below command in the docker 
 ![image](https://github.com/user-attachments/assets/9f833b26-d0bf-4f83-abb3-7b629a7e0e65)
 
@@ -140,11 +142,15 @@ MCP Server is running at https://localhost:8000/sse
 ![image](https://github.com/user-attachments/assets/359c623b-0aab-45e1-a78f-610d93b4131d)
 
 
-MCP server is equiped with the below tools, based on user input it calls the related tool
+MCP server is equiped with the below tools:
+* IRIS Info tool
+* Check Weather tool
+* Find secret word tool (Local function)
+* Addition Tool (Local function)
+
+Based on user input MCP delegat the task to related tool
 ![image](https://github.com/user-attachments/assets/7be957e3-0661-45b4-b351-562205f6c1b3)
-Based on the user input, Server calls related tool.
-4 Tools are defined with MCP server, 1,2,3,4.
-Based on the user input MCP will call related tool.
+
 ![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
 
 Thanks
