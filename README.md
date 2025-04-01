@@ -64,6 +64,14 @@ Websearch Tool
 ## MCP Server application
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8001) 
 ![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
+in case of below error, start application manually by using below command in the docker 
+![image](https://github.com/user-attachments/assets/9f833b26-d0bf-4f83-abb3-7b629a7e0e65)
+
+```
+chainlit run /irisdev/app/src/python/aai/MCPapp.py -h --port 8001 --host 0.0.0.0
+```
+
+![image](https://github.com/user-attachments/assets/f2003c1f-5fbc-40ed-8ef7-160497a3aea2)
 
 
 
