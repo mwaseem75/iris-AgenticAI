@@ -51,6 +51,16 @@ docker-compose up -d
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8002) 
 ![image](https://github.com/user-attachments/assets/71a7d091-b7d0-4650-b0a9-1439363bb47f)
 
+Ask about IRIS licence information
+![image](https://github.com/user-attachments/assets/8db9904b-ffb3-458e-b952-6c386e8d4c69)
+
+![image](https://github.com/user-attachments/assets/a1f95ac7-7274-4ba0-a28f-bfe69b5abe65)
+
+Websearch Tool
+![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
+
+
+
 ## MCP Server application
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8001) 
 ![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
