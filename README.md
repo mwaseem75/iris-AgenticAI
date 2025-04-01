@@ -1,4 +1,4 @@
-# Iris-AgenticAI
+# Iris-AgenticAI 🤖⚡
 The rise of agentic AI marks a transformative leap in how artificial intelligence interacts with the world—moving beyond static responses to dynamic, goal-driven problem-solving. Powered by [OpenAI’s Agentic SDK](https://openai.github.io/openai-agents-python/)), The OpenAI Agents SDK enables you to build agentic AI apps in a lightweight, easy-to-use package with very few abstractions. It's a production-ready upgrade of our previous experimentation for agents, Swarm. 
 
 This application showcases the next generation of autonomous AI systems capable of reasoning, collaborating, and executing complex tasks with human-like adaptability. 
@@ -14,12 +14,30 @@ This application showcases the next generation of autonomous AI systems capable 
 ![image](https://github.com/user-attachments/assets/31b89b5c-5c81-4b7f-aa90-9997ae9092b8)
 
 # Features
-* **Agent loop**: Built-in agent loop that handles calling tools, sending results to the LLM, and looping until the LLM is done
-* **Python-first**: Use built-in language features to orchestrate and chain agents.
-* **Handoffs**: A powerful feature to coordinate and delegate between multiple agents.
-* **Function tools**: Turn any Python function into a tool
-* **Tracing**: Built-in tracing that lets you visualize, debug and monitor your workflows
-* **MCP Servers**: Stdio and HTTP over SSEModel Model context protocol (MCP) servers support.
+* **Agent Loop** 🔄
+A built-in loop that autonomously manages tool execution, sends results back to the LLM, and iterates until task completion.
+
+* **Python-First** 🐍
+Leverage native Python syntax (decorators, generators, etc.) to orchestrate and chain agents without external DSLs.
+
+* **Handoffs** 🤝
+Seamlessly coordinate multi-agent workflows by delegating tasks between specialized agents.
+
+* **Function Tools** ⚒️
+Decorate any Python function with @tool to instantly integrate it into the agent’s toolkit.
+
+* **Tracing** 🔍
+Built-in tracing to visualize, debug, and monitor agent workflows in real time (think LangSmith alternatives).
+
+* **MCP Servers** 🌐
+Support for Model Context Protocol (MCP) via stdio and HTTP, enabling cross-process agent communication.
+
+* **Chainlit UI** 🖥️
+Integrated Chainlit framework for building interactive chat interfaces with minimal code.
+
+* **Stateful Memory** 🧠
+Preserve chat history, context, and agent state across sessions for continuity and long-running tasks.
+
 
 # Installation
 1. Clone/git pull the repo into any local directory
@@ -105,10 +123,21 @@ triage_agent = Agent(
 
 ```
 
-User asked two questions, Triage agent receive the input and delegate 1st question  to IRIS dashboard agent and 2nd question to IRIS Running process agent:
+Triage Agent receives user input containing two questions
+
+Delegation Logic:
+
+First question → routed to IRIS Dashboard Agent
+
+Second question → routed to IRIS Running Process Agent
 ![image](https://github.com/user-attachments/assets/8db9904b-ffb3-458e-b952-6c386e8d4c69)
 
-User asked two questions, Triage agent receive the input and delegate 1st question  to IRIS production agent and 2nd question to Local Agent
+Agent Specialization
+
+Agent Type	Responsibility	Example Questions
+IRIS Production Agent	Production environment queries	"Show current API throughput"
+Local Agent	Development/local environment tasks	"Run test suite on my branch"
+
 ![image](https://github.com/user-attachments/assets/a1f95ac7-7274-4ba0-a28f-bfe69b5abe65)
 
 User asked two questions, Triage agent receive the input and delegate both questions to WebSearch Agent.
@@ -121,12 +150,13 @@ https://platform.openai.com/logs
 
 
 ## MCP Server application
-To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8001) 
+To run the Application, navigate to [**http://localhost:8002**](http://localhost:8001) 
 ![image](https://github.com/user-attachments/assets/3a911108-bc52-473b-9b16-bfe8581f3c3f)
 
-Application communicate to MCP server which is running at localhost
-Below is the command to start MCP server in case if server is not started
-in case of below error, start application manually by using below command in the docker 
+The application communicates with the MCP Server, which runs locally at localhost.
+#### Starting the MCP Server
+If the server is not running, manually start it using the following Docker command:
+Note: If you encounter errors, ensure the server is launched before starting the application. 
 ![image](https://github.com/user-attachments/assets/9f833b26-d0bf-4f83-abb3-7b629a7e0e65)
 
 ```
@@ -134,7 +164,7 @@ chainlit run /irisdev/app/src/python/aai/MCPapp.py -h --port 8001 --host 0.0.0.0
 ```
 ![image](https://github.com/user-attachments/assets/f2003c1f-5fbc-40ed-8ef7-160497a3aea2)
 
-Below is the command to start MCP server in case if server is not started
+The MCP Server is configured to start automatically. If the server fails to launch, manually start it using the following command:
 ```
 uv run python /irisdev/app/src/python/aai/runMCPServer.py
 ```
@@ -142,15 +172,13 @@ MCP Server is running at https://localhost:8000/sse
 ![image](https://github.com/user-attachments/assets/359c623b-0aab-45e1-a78f-610d93b4131d)
 
 
-MCP server is equiped with the below tools:
+The MCP Server is equipped with the following tools:
 * IRIS Info tool
 * Check Weather tool
 * Find secret word tool (Local function)
 * Addition Tool (Local function)
-
-Based on user input MCP delegat the task to related tool
 ![image](https://github.com/user-attachments/assets/7be957e3-0661-45b4-b351-562205f6c1b3)
-
+The MCP Server dynamically delegates tasks to the appropriate tool based on user input.
 ![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
 
 Thanks
