@@ -124,6 +124,10 @@ Ask about IRIS licence information
 Websearch Tool
 ![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
 
+### Tracing
+The Agents SDK includes built-in tracing, collecting a comprehensive record of events during an agent run: LLM generations, tool calls, handoffs, guardrails, and even custom events that occur. Using the Traces dashboard, you can debug, visualize, and monitor your workflows during development and in production.
+https://platform.openai.com/logs
+![image](https://github.com/user-attachments/assets/f5476f50-c748-4bfa-97e4-60c65a1d904e)
 
 
 ## MCP Server application
