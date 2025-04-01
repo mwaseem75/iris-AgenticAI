@@ -115,32 +115,21 @@ triage_agent = Agent(
             "If they ask about production, handoff to the production agent."
             "If they ask about dashboard, handoff to the dashboard agent."
             "If they ask about process, handoff to the processes agent." 
-            "use the WebSearchAgent tool to find information related to the user's query."           
+            "Use the WebSearchAgent tool to find information related to the user's query."           
             "If they ask about order, handoff to the order_agent."            
         ),
         handoffs=[production_agent,dashboard_agent,processes_agent,web_search_agent,order_agent]
     )
 
 ```
-
-Triage Agent receives user input containing two questions
-
-Delegation Logic:
-
-First question → routed to IRIS Dashboard Agent
-
-Second question → routed to IRIS Running Process Agent
+#### Application Workflow Process
+The Triage Agent receives user input containing two questions, routing the first question to the IRIS Dashboard Agent and the second question to the IRIS Running Process Agent.
 ![image](https://github.com/user-attachments/assets/8db9904b-ffb3-458e-b952-6c386e8d4c69)
 
-Agent Specialization
-
-Agent Type	Responsibility	Example Questions
-IRIS Production Agent	Production environment queries	"Show current API throughput"
-Local Agent	Development/local environment tasks	"Run test suite on my branch"
-
+The Triage Agent receives user input containing two questions, routing the first question to the IRIS Production Agent and the second question to the Local Agent.
 ![image](https://github.com/user-attachments/assets/a1f95ac7-7274-4ba0-a28f-bfe69b5abe65)
 
-User asked two questions, Triage agent receive the input and delegate both questions to WebSearch Agent.
+Here, the triage Agent receives two questions, routing both to the WebSearcg Agent.
 ![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
 
 ### Tracing
