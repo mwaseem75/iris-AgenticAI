@@ -51,6 +51,71 @@ docker-compose up -d
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8002) 
 ![image](https://github.com/user-attachments/assets/71a7d091-b7d0-4650-b0a9-1439363bb47f)
 
+## About OpenAI Agents SDK
+The OpenAI Agents SDK enables you to build agentic AI apps in a lightweight, easy-to-use package with very few abstractions. It's a production-ready upgrade of our previous experimentation for agents, Swarm.
+
+####  Main features of the SDK:
+Agent loop: Built-in agent loop that handles calling tools, sending results to the LLM, and looping until the LLM is done.
+Python-first: Use built-in language features to orchestrate and chain agents, rather than needing to learn new abstractions.
+Handoffs: A powerful feature to coordinate and delegate between multiple agents.
+Guardrails: Run input validations and checks in parallel to your agents, breaking early if the checks fail.
+Function tools: Turn any Python function into a tool, with automatic schema generation and Pydantic-powered validation.
+Tracing: Built-in tracing that lets you visualize, debug and monitor your workflows, as well as use the OpenAI suite of evaluation, fine-tuning and distillation tools.
+
+#### Agent
+Agents are the core building block in your apps. An agent is a large language model (LLM), configured with instructions and tools.
+Basic configuration
+The most common properties of an agent you'll configure are:
+
+instructions: also known as a developer message or system prompt.
+model: which LLM to use, and optional model_settings to configure model tuning parameters like temperature, top_p, etc.
+tools: Tools that the agent can use to achieve its tasks.
+
+```
+from agents import Agent, ModelSettings, function_tool
+
+@function_tool
+def get_weather(city: str) -> str:
+    return f"The weather in {city} is sunny"
+
+agent = Agent(
+    name="Haiku agent",
+    instructions="Always respond in haiku form",
+    model="o3-mini",
+    tools=[get_weather],
+)
+```
+our application contains 7 agents
+![image](https://github.com/user-attachments/assets/7dae8064-0ba2-42be-bb09-561e9df755e7)
+
+-
+-
+-
+-
+-
+-
+-
+
+#### handoffs
+Handoffs allow an agent to delegate tasks to another agent. This is particularly useful in scenarios where different agents specialize in distinct areas. For example, a customer support app might have agents that each specifically handle tasks like order status, refunds, FAQs, etc.
+
+Triage agent is our main agent which delegate tasks to another agent based on user input
+```
+triage_agent = Agent(
+        name="Triage agent",
+        instructions=(
+            "Handoff to appropriate agent based on user query."
+            "If they ask about production, handoff to the production agent."
+            "If they ask about dashboard, handoff to the dashboard agent."
+            "If they ask about process, handoff to the processes agent." 
+            "use the WebSearchAgent tool to find information related to the user's query."           
+            "If they ask about order, handoff to the order_agent."            
+        ),
+        handoffs=[production_agent,dashboard_agent,processes_agent,web_search_agent,order_agent]
+    )
+
+```
+
 Ask about IRIS licence information
 ![image](https://github.com/user-attachments/assets/8db9904b-ffb3-458e-b952-6c386e8d4c69)
 
