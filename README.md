@@ -5,7 +5,8 @@ The rise of agentic AI marks a transformative leap in how artificial intelligenc
 
 
 # Application Structure
-![image](https://github.com/user-attachments/assets/3a2126d2-e5a8-481f-b8b1-8f1f99b320f4)
+![image](https://github.com/user-attachments/assets/6525c638-4708-4eb8-9b83-6411d8592d6a)
+
 
 
 # Application Interface
@@ -17,6 +18,7 @@ The rise of agentic AI marks a transformative leap in how artificial intelligenc
 * IRIS Production Information Agent
 * WebSearch Agent
 * Local Functional Agent
+* Model context protocol (MCP) functionality
 
 # Installation
 1. Clone/git pull the repo into any local directory
@@ -46,8 +48,24 @@ docker-compose up -d
 
 
 ## Run Chainlit Web Application
-To run the application Navigate to [**http://localhost:8002**](http://localhost:8002) 
-![image](https://github.com/user-attachments/assets/31b89b5c-5c81-4b7f-aa90-9997ae9092b8)
+To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8002) 
+![image](https://github.com/user-attachments/assets/71a7d091-b7d0-4650-b0a9-1439363bb47f)
+
+Ask about IRIS licence information
+![image](https://github.com/user-attachments/assets/8db9904b-ffb3-458e-b952-6c386e8d4c69)
+
+![image](https://github.com/user-attachments/assets/a1f95ac7-7274-4ba0-a28f-bfe69b5abe65)
+
+Websearch Tool
+![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
+
+
+
+## MCP Server application
+To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8001) 
+![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
+
+
 
 
 
