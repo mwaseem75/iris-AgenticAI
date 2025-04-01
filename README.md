@@ -140,9 +140,20 @@ in case of below error, start application manually by using below command in the
 chainlit run /irisdev/app/src/python/aai/MCPapp.py -h --port 8001 --host 0.0.0.0
 ```
 
+Below is the command to start MCP server in case if server is not started
+```
+uv run python /irisdev/app/src/python/aai/runMCPServer.py
+```
+MCP Server is running on port 8000
+![image](https://github.com/user-attachments/assets/359c623b-0aab-45e1-a78f-610d93b4131d)
+
+
+MCP server is equiped with the below tools, based on user input it calls the related tool
+![image](https://github.com/user-attachments/assets/7be957e3-0661-45b4-b351-562205f6c1b3)
+Based on the user input, Server calls related tool
 ![image](https://github.com/user-attachments/assets/f2003c1f-5fbc-40ed-8ef7-160497a3aea2)
 
-
+Thanks
 
 
 
