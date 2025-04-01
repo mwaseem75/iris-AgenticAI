@@ -134,7 +134,7 @@ https://platform.openai.com/logs
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8001) 
 ![image](https://github.com/user-attachments/assets/3a911108-bc52-473b-9b16-bfe8581f3c3f)
 
-![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
+
 in case of below error, start application manually by using below command in the docker 
 ![image](https://github.com/user-attachments/assets/9f833b26-d0bf-4f83-abb3-7b629a7e0e65)
 
@@ -153,8 +153,10 @@ MCP Server is running at https://localhost:8000/sse
 
 MCP server is equiped with the below tools, based on user input it calls the related tool
 ![image](https://github.com/user-attachments/assets/7be957e3-0661-45b4-b351-562205f6c1b3)
-Based on the user input, Server calls related tool
-
+Based on the user input, Server calls related tool.
+4 Tools are defined with MCP server, 1,2,3,4.
+Based on the user input MCP will call related tool.
+![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
 
 Thanks
 
