@@ -166,7 +166,9 @@ The MCP Server is equipped with the following tools:
 * Check Weather tool
 * Find secret word tool (Local function)
 * Addition Tool (Local function)
+
 ![image](https://github.com/user-attachments/assets/7be957e3-0661-45b4-b351-562205f6c1b3)
+
 The MCP Server dynamically delegates tasks to the appropriate tool based on user input.
 ![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
 
