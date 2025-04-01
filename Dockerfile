@@ -20,3 +20,4 @@ RUN iris start IRIS \
 	&& iris session IRIS < iris.script \
     && iris stop IRIS quietly
 
+#ENTRYPOINT ["uv", "run", "python", "/irisdev/app/src/python/aai/runMCPServer.py"]

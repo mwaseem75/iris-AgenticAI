@@ -5,15 +5,13 @@ from pydantic import BaseModel, Field
 from agents.mcp.server import MCPServerSse
 from agents.model_settings import ModelSettings
 import chainlit as cl
-from agents import Agent, Runner, WebSearchTool, AsyncOpenAI,OpenAIChatCompletionsModel
+from agents import Agent, Runner, WebSearchTool, gen_trace_id, trace
 from agents.run import RunConfig
 from agents.tool import function_tool
 import IrisUtil
 
 # Load the environment variables from the .env file
 load_dotenv()
-
-
 
 #Get OPENAI Key, if not fond in .env then get the GEIMINI API KEY
 #IF Both defined then take OPENAI Key 
@@ -69,65 +67,6 @@ async def start():
         tools=[check_order_status]
     )
 
-     # #Start Production Agent Tool
-    # @function_tool
-    # def start_production(prod: str = "last") -> str:
-    #         """Help to Start production"""
-            
-    #         #Get last running production name
-    #         if str == "last":
-    #             lastProd = iris.gref("^Ens.Configuration")['csp', "LastProduction"]
-    #             if lastProd is not None and str(lastProd).strip():
-    #                 prod = lastProd
-    #             else:
-    #                 return "Not able to get Production details"          
-
-    #         sts = iris.cls('Ens.Director').StartProduction(prod)
-    #         if sts == 1:
-    #             return "Prodcution Started Successfully"
-    #         else:
-    #             return "Error while Sstarting Production"     
-    
-    # start_production_agent = Agent(
-    #        name="StartProduction",
-    #        instructions="Agent to Start the Production. if prod is not specified then take last production",
-    #        tools=[start_production]
-    # )
-
-    # #Stop Production Agent Tool
-    # @function_tool
-    # def stop_production() -> str:
-    #         """Agent to Stop currently running Production."""
-            
-    #         sts = iris.cls('Ens.Director').StopProduction(3,1)
-    #         if sts == 1:
-    #             return "Prodcution Stoped Successfully"
-    #         else:
-    #             return "Error while Sstarting Production"     
-
-    
-    # stop_production_agent = Agent(
-    #        name="StopProduction",
-    #        instructions="Help to Stop Currently running production",
-    #        tools=[stop_production]
-    # )
-
-
-    # #MCP setting. 
-    # async with MCPServerSse(
-    #      name="time_mcp_server",
-    #      params={"url": "https://router.mcp.so/sse/4dsvypm8vlhk9p"},         
-    #      cache_tools_list=True,
-    # ) as time_mscp_server:
-
-    #     mcp_agent = Agent(
-    #             name="mcp_agent",
-    #             model=model,
-    #             instructions="You are a helpful assistant with access to remote tools via MCP to answer real time questions",
-    #             mcp_server=[time_mscp_server],
-    #             model_settings=ModelSettings(tool_choice="required"),
-    #     )
-       
     #Production Agent Tool
     @function_tool
     def check_production_status():
@@ -198,8 +137,7 @@ async def start():
         handoffs=[production_agent,dashboard_agent,processes_agent,web_search_agent,order_agent]
     )
 
-  
-    
+      
     """Set up the chat session when a user connects."""
     # Initialize an empty chat history in the session.
     cl.user_session.set("chat_history", [])
@@ -236,9 +174,17 @@ async def main(message: cl.Message):
 
     try:
         print("\n[CALLING_AGENT_WITH_CONTEXT]\n", history, "\n")
-        #result = Runner.run_sync(agent, history, run_config=config)
         result = Runner.run_sync(agent, history, run_config=config)
+        #result = Runner.run_streamed(agent, history, run_config=config)
 
+        # print("\n")
+        # async for event in result.stream_events():
+        #     if event.type == "raw_response_event" and isinstance(
+        #         event.data,ResonseTextDeltaEvent
+        #     ):
+        #         response_content = event.data.delta
+        
+        
         response_content = result.final_output
         
         # Update the thinking message with the actual response
