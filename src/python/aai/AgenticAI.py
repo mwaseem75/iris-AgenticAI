@@ -93,7 +93,7 @@ async def start():
 
     dashboard_agent = Agent(
             name="DashboardAgent",
-            instructions="Assist to provide managment portal dashboard details.\
+            instructions="Assist in providing management portal dashboard details\
             ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,\
 		    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,\
 		    JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurrentPct,\
@@ -112,11 +112,9 @@ async def start():
     processes_agent = Agent(
             name="ProcessesAgent",
             instructions="Assist to provide IRIS running processes details.\
-            Process ID, NameSpace, Routine, LinesExecuted, GlobalReferences, \
-            state, PidExternal, UserName, ClientIPAddress"  ,      
+            Process ID, NameSpace, Routine, state, PidExternal"  ,      
             tools=[process_info]
     )
-
 
     web_search_agent = Agent(
         name="WebSearchAgent",
