@@ -11,7 +11,8 @@ This application showcases the next generation of autonomous AI systems capable 
 
 
 # Application Interface
-![image](https://github.com/user-attachments/assets/31b89b5c-5c81-4b7f-aa90-9997ae9092b8)
+![image](https://github.com/user-attachments/assets/fb6efbc1-46a1-421d-9822-7006fd80462a)
+
 
 # Features
 * **Agent Loop** 🔄
@@ -68,7 +69,8 @@ docker-compose up -d
 
 ## Run Chainlit Web Application
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8002) 
-![image](https://github.com/user-attachments/assets/71a7d091-b7d0-4650-b0a9-1439363bb47f)
+![image](https://github.com/user-attachments/assets/2c4ad611-0e82-4c2a-ade5-1fd7f8d66465)
+
 
 #### Agent
 Agents are the core building block in your apps. An agent is a large language model (LLM), configured with instructions and tools.
@@ -99,7 +101,7 @@ Application contains 7 agents:
 ( ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,
 JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurrentPct,		    LicenseHigh,LicenseHighPct,LicenseLimit,LicenseType,LockTable,.LogicalReads,Processes,		    RouRefs,SeriousAlerts,ShadowServer,ShadowSource,SystemUpTime,WriteDaemon)  
 * **IRIS Running Process Agent**: Assist to provide IRIS running processes details.(Process ID, NameSpace, Routine, state, PidExternal)
-* **IRIS Production Agent**: Assist to provide Production informatoin
+* **IRIS Production Agent**: Assist to provide Production information, start and stop the production.
 * **WebSearch Agent** : Perform web searches to find relevant information.
 * **Order Agent** : Check the status of an order with the given order ID. 
 
@@ -123,11 +125,20 @@ triage_agent = Agent(
 
 ```
 #### Application Workflow Process
-The Triage Agent receives user input containing two questions, routing the first question to the IRIS Dashboard Agent and the second question to the IRIS Running Process Agent.
-![image](https://github.com/user-attachments/assets/8db9904b-ffb3-458e-b952-6c386e8d4c69)
+The Triage Agent receives user input, routing the question to the IRIS Dashboard Agent.
+![image](https://github.com/user-attachments/assets/868fe832-fcd9-4d2c-907e-896787f52c39)
 
-The Triage Agent receives user input containing two questions, routing the first question to the IRIS Production Agent and the second question to the Local Agent.
-![image](https://github.com/user-attachments/assets/a1f95ac7-7274-4ba0-a28f-bfe69b5abe65)
+The Triage Agent receives user input, routing the question to the IRIS Processes Agent.
+![image](https://github.com/user-attachments/assets/cb941c66-e35b-4dd9-9d59-950d648a5eec)
+
+Start and Stop the Production.
+![image](https://github.com/user-attachments/assets/b44f3f79-e29c-49ea-9686-9a22289199ba)
+
+Get Production Details.
+![image](https://github.com/user-attachments/assets/b356a29a-fcf9-4dfc-9d4a-8ce41fcd8dc6)
+
+The Triage Agent receives user input, routing the question to the Loacal Order Agent.
+![image](https://github.com/user-attachments/assets/83dff43f-8214-4e69-8c59-fa2abfa42d42)
 
 Here, the triage Agent receives two questions, routing both to the WebSearcg Agent.
 ![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
