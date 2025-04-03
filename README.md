@@ -149,28 +149,14 @@ https://platform.openai.com/logs
 ![image](https://github.com/user-attachments/assets/f5476f50-c748-4bfa-97e4-60c65a1d904e)
 
 
-## MCP Server application
-To run the Application, navigate to [**http://localhost:8002**](http://localhost:8001) 
-![image](https://github.com/user-attachments/assets/3a911108-bc52-473b-9b16-bfe8581f3c3f)
+## MCP Server
+MCP Server is running at https://localhost:8000/sse
+![image](https://github.com/user-attachments/assets/df7ff363-3b67-4991-8ba3-0bed644f5040)
 
-The application communicates with the MCP Server, which runs locally at localhost.
-#### Starting the MCP Server
-If the server is not running, manually start it using the following Docker command:
-Note: If you encounter errors, ensure the server is launched before starting the application. 
-![image](https://github.com/user-attachments/assets/9f833b26-d0bf-4f83-abb3-7b629a7e0e65)
-
-```
-chainlit run /irisdev/app/src/python/aai/MCPapp.py -h --port 8001 --host 0.0.0.0
-```
-![image](https://github.com/user-attachments/assets/f2003c1f-5fbc-40ed-8ef7-160497a3aea2)
-
-The MCP Server is configured to start automatically. If the server fails to launch, manually start it using the following command:
+**NOTE:** The MCP Server is configured to start automatically. If the server fails to launch, manually start it using the following command:
 ```
 uv run python /irisdev/app/src/python/aai/runMCPServer.py
 ```
-MCP Server is running at https://localhost:8000/sse
-![image](https://github.com/user-attachments/assets/359c623b-0aab-45e1-a78f-610d93b4131d)
-
 
 The MCP Server is equipped with the following tools:
 * IRIS Info tool
@@ -217,7 +203,18 @@ if __name__ == "__main__":
     mcp.run(transport="sse")
 ```
 
-![image](https://github.com/user-attachments/assets/7be957e3-0661-45b4-b351-562205f6c1b3)
+## MCP application
+The application communicates with the MCP Server, which runs locally at localhost.
+MCP application is running at http://localhost:8001
+![image](https://github.com/user-attachments/assets/1fbacf2d-d60b-4683-aaab-817d0ce73695)
+
+#### Starting the MCP application
+**NOTE:** In case of "Page isn't working error", manually start the application by using the following Docker command:
+```
+chainlit run /irisdev/app/src/python/aai/MCPapp.py -h --port 8001 --host 0.0.0.0
+```
+![image](https://github.com/user-attachments/assets/f2003c1f-5fbc-40ed-8ef7-160497a3aea2)
+
 
 The MCP Server dynamically delegates tasks to the appropriate tool based on user input.
 ![image](https://github.com/user-attachments/assets/41fd5443-6da3-495d-8264-0af4390c3ece)
