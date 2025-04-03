@@ -137,7 +137,7 @@ Start and Stop the Production.
 Get Production Details.
 ![image](https://github.com/user-attachments/assets/b356a29a-fcf9-4dfc-9d4a-8ce41fcd8dc6)
 
-The Triage Agent receives user input, routing the question to the Loacal Order Agent.
+The Triage Agent receives user input, routing the question to the Local Order Agent.
 ![image](https://github.com/user-attachments/assets/83dff43f-8214-4e69-8c59-fa2abfa42d42)
 
 Here, the triage Agent receives two questions, routing both to the WebSearcg Agent.
