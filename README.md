@@ -220,7 +220,8 @@ if __name__ == "__main__":
 ![image](https://github.com/user-attachments/assets/7be957e3-0661-45b4-b351-562205f6c1b3)
 
 The MCP Server dynamically delegates tasks to the appropriate tool based on user input.
-![image](https://github.com/user-attachments/assets/03d96d43-d42c-4ff2-a5b2-da3fc0b8f721)
+![image](https://github.com/user-attachments/assets/41fd5443-6da3-495d-8264-0af4390c3ece)
+
 
 Thanks
 
