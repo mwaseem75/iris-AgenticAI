@@ -1,6 +1,8 @@
 Class dc.AAI.TestProduction Extends Ens.Production
 {
 
+// Test production used by Production Agent
+
 XData ProductionDefinition
 {
 <Production Name="dc.AAI.TestProduction" TestingEnabled="true" LogGeneralTraceEvents="false">

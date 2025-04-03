@@ -1,12 +1,10 @@
 import os
 from dotenv import load_dotenv
-from typing import cast, List
-from pydantic import BaseModel, Field
 from agents.mcp.server import MCPServerSse
 from agents.model_settings import ModelSettings
 import chainlit as cl
 from agents.run import RunConfig
-from agents import Agent, Runner, gen_trace_id, trace
+from agents import Agent, Runner
 
 
 # Load the environment variables from the .env file
@@ -24,6 +22,7 @@ async def start():
       
     WelcomeMsg = "Welcome to the IRIS MCP Assistant! I can assist you to provide:\n" \
                 "- Weather Information. e.g(What's the weather in Tokyo?)\n" \
+                "- Get IRIS version. e.g(Provide me IRIS version details)\n" \
                 "- Find secret word. e.g(What is the secret word?)\n" \
                 "- Perform Addition. e.g (Add these numbers: 9 and 21)."            
     

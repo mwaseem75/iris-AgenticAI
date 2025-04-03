@@ -1,11 +1,8 @@
 import os
 from dotenv import load_dotenv
 from typing import cast, List
-from pydantic import BaseModel, Field
-from agents.mcp.server import MCPServerSse
-from agents.model_settings import ModelSettings
 import chainlit as cl
-from agents import Agent, Runner, WebSearchTool, gen_trace_id, trace
+from agents import Agent, Runner, WebSearchTool
 from agents.run import RunConfig
 from agents.tool import function_tool
 import IrisUtil
@@ -31,7 +28,7 @@ async def set_starts() -> List[cl.Starter]:
 
 @cl.on_chat_start
 async def start():
-    # With GEMINI API KEY
+    # Setup With GEMINI API KEY
     # #Reference: https://ai.google.dev/gemini-api/docs/openai
     # external_client = AsyncOpenAI(
     #      api_key=gemini_api_key,
@@ -42,6 +39,7 @@ async def start():
     #      openai_client=external_client
     # )
 
+    #with OPENAI
     model = "o3-mini" 
 
     config = RunConfig(
@@ -50,42 +48,46 @@ async def start():
         tracing_disabled=True
     )
 
-    
+    #PRODUCTION AGENT AND HIS TOOLS
+    #Assist to provide Production information, start and stop the production.
     @function_tool
-    def check_order_status(order_id: str):
-        """Check the status of an order with the given order ID."""
-        order_statuses = {
-            "12345": "Your order 12345 is being prepared and will be delivered in 20 minutes.",
-            "67890": "Your order 67890 has been dispatched and will arrive in 10 minutes.",
-            "11121": "Your order 11121 is still being processed. Please wait a little longer."
-        }
-        return order_statuses.get(order_id, "Order ID not found. Please check and try again.")
-
-    order_agent = Agent(
-        name="OrderAgent",
-        instructions="Help customers with their order status. If they provide an order ID, fetch the status.",
-        tools=[check_order_status]
-    )
-
-    #Production Agent Tool
-    @function_tool
-    def check_production_status():
+    @cl.step(name = "Production Agent (get_production_detils)", type="tool", show_input = False)
+    def get_production_details():
             """Provide Production Status, production details"""
-            production_status =  IrisUtil.get_production_status()
-            if production_status == '{}':
+            production_dtl =  IrisUtil.get_production_details()
+            if production_dtl == '{}':
                 return "Production status not found. Please check and try again."
            
-            return production_status
+            return production_dtl
+
+    @function_tool
+    @cl.step(name = "Production Agent (start_production)", type="tool",  show_input = False)
+    def start_production() -> str:
+        """Help to Start production"""
+        sts =  IrisUtil.start_production()
+        return sts  
+        
+    
+    @function_tool
+    @cl.step(name = "Production Agent (stop_production)", type="tool", show_input = False)
+    def stop_production() -> str:
+        """Agent to Stop currently running Production."""
+        sts =  IrisUtil.stop_production()
+        return sts     
 
     production_agent = Agent(
             name="ProductionAgent",
-            instructions="Assist to provide production details, production status.\
-            Call the tool and return the production_status",            
-            tools=[check_production_status]
+            instructions="Assist to provide production details, Start production and stop production.\
+            Call check_production_status tool when user asked about production status \
+            Call start_production tool when user asked to start production \
+            Call stop_production tool when user asked to stop production",            
+            tools=[get_production_details,start_production,stop_production]
     )
 
-    #Production Agent Tool
+    # MANAGEMENT PORTAL DASHBOARD AGENT AND HIS TOOL 
+    # Assist in providing below management portal dashboard details
     @function_tool
+    @cl.step(name = "Management Portal Dashboard Agent", type="tool", show_input = False)
     def dashboard_info():
             """Provide Management Portal Dashboard information"""
             content = IrisUtil.get_dashboard_stats()            
@@ -102,8 +104,10 @@ async def start():
             tools=[dashboard_info]
     )
 
-        #Production Agent Tool
+    # PROCESSES AGENT 
+    # Assist to provide IRIS running processes details.(Process ID, NameSpace, Routine, state, PidExternal)
     @function_tool
+    @cl.step(name = "Process Info Agent", type="tool",  show_input = False)
     def process_info():
             """Provide Management Portal Dashboard information"""
             content = IrisUtil.get_processes()            
@@ -116,13 +120,33 @@ async def start():
             tools=[process_info]
     )
 
+    #WEBSEARCH AGENT, Perform web searches to find relevant information.
     web_search_agent = Agent(
         name="WebSearchAgent",
         instructions="Perform web searches to find relevant information.",
         tools=[WebSearchTool()]
     )
 
+    # ORDER STATUS AGENT AND HIS TOOLS (local function)
+    # Check the status of an order with the given order ID.
+    @function_tool
+    @cl.step(name = "Order Status Agent", type="tool")
+    def check_order_status(order_id: str):
+        """Check the status of an order with the given order ID."""
+        order_statuses = {
+            "12345": "Your order 12345 is being prepared and will be delivered in 20 minutes.",
+            "67890": "Your order 67890 has been dispatched and will arrive in 10 minutes.",
+            "11121": "Your order 11121 is still being processed. Please wait a little longer."
+        }
+        return order_statuses.get(order_id, "Order ID not found. Please check and try again.")
 
+    order_agent = Agent(
+        name="OrderAgent",
+        instructions="Help customers with their order status. If they provide an order ID, fetch the status.",
+        tools=[check_order_status]
+    )
+
+    #TRIAGE AGENT, Main agent receives user input and delegates to other agent by using handoffs
     triage_agent = Agent(
         name="Triage agent",
         instructions=(
@@ -147,8 +171,9 @@ async def start():
     WelcomeMsg = "Welcome to the IRIS AI Assistant! I can assist you to provide:\n" \
                 "- IRIS Management Portal dashboard information\n" \
                 "- Information about currently running processes\n" \
-                "- Production status.\n" \
-                "- Websearch functionality." 
+                "- Get Production details, Start and Stop the production.\n" \
+                "- Websearch functionality.\n" \
+                "- Provide status of orders (12345,67890,11121)" 
             
     await cl.Message(content=WelcomeMsg).send()
    
@@ -174,16 +199,7 @@ async def main(message: cl.Message):
     try:
         print("\n[CALLING_AGENT_WITH_CONTEXT]\n", history, "\n")
         result = Runner.run_sync(agent, history, run_config=config)
-        #result = Runner.run_streamed(agent, history, run_config=config)
-
-        # print("\n")
-        # async for event in result.stream_events():
-        #     if event.type == "raw_response_event" and isinstance(
-        #         event.data,ResonseTextDeltaEvent
-        #     ):
-        #         response_content = event.data.delta
-        
-        
+               
         response_content = result.final_output
         
         # Update the thinking message with the actual response

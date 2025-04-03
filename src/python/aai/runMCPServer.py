@@ -6,7 +6,6 @@ from typing import Any
 from dotenv import load_dotenv
 
 
-
 load_dotenv()
 
 #Get OPENAI Key, if not fond in .env then get the GEIMINI API KEY

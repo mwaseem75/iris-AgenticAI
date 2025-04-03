@@ -3,17 +3,7 @@ Include (%occInclude, Ensemble)
 Class dc.AAI.Director [ Inheritance = right, ProcedureBlock, System = 4 ]
 {
 
-ClassMethod dispatchCreateBusinessService(pTargetDispatchName As %String) As Ens.BusinessService
-{
-	set tSC = ##class(Ens.Director).CreateBusinessService(pTargetDispatchName,.service)
-	
-	// Hack to prevent job to be registered in the production
-	do ##class(Ens.Job).UnRegister(pTargetDispatchName,$JOB)
-	
-	if $$$ISERR(tSC) throw ##class(%Exception.StatusException).CreateFromStatus(tSC)
-	
-	quit service
-}
+// Function provide Production details, used by Production agent
 
 ClassMethod dispatchListProductions() As %String
 {
@@ -41,18 +31,20 @@ ClassMethod dispatchListProductions() As %String
 	return tDict
 }
 
+// Function used by the Production Agent in the process of stopping and starting production.
+
 ClassMethod StatusProduction() As %String
 {
 	Set sc = $$$OK
-	Set tInfo = ##class(%SYS.Python).Import("builtins").dict()
+	
 	$$$ThrowOnError(##class(Ens.Director).GetProductionStatus(.tProdName,.tStatus))
-	do tInfo."__setitem__"("Production",tProdName)
-	do tInfo."__setitem__"("Status",$CASE(tStatus,$$$eProductionStateRunning:"running",
+	set status = $CASE(tStatus,$$$eProductionStateRunning:"running",
 												$$$eProductionStateStopped:"stopped",
 												$$$eProductionStateSuspended:"suspended",
-												$$$eProductionStateTroubled:"toubled",
-												:"unknown"))
-	Return tInfo
+												$$$eProductionStateTroubled:"toubled",	
+ 											   :"unknown")
+	
+	Return status
 }
 
 }
