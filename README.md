@@ -96,14 +96,14 @@ agent = Agent(
 )
 ```
 Application contains 7 agents:
-* **Triage Agent** : Main agent receives user input and delegates to other agent by using handoffs
-* **IRIS Dashboard Agent**: Assist in providing below management portal dashboard details:
+* **Triage Agent** 🤖 : Main agent receives user input and delegates to other agent by using handoffs
+* **IRIS Dashboard Agent** 🤖: Assist in providing below management portal dashboard details:
 ( ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,
 JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurrentPct,		    LicenseHigh,LicenseHighPct,LicenseLimit,LicenseType,LockTable,.LogicalReads,Processes,		    RouRefs,SeriousAlerts,ShadowServer,ShadowSource,SystemUpTime,WriteDaemon)  
-* **IRIS Running Process Agent**: Assist to provide IRIS running processes details.(Process ID, NameSpace, Routine, state, PidExternal)
-* **IRIS Production Agent**: Assist to provide Production information, start and stop the production.
-* **WebSearch Agent** : Perform web searches to find relevant information.
-* **Order Agent** : Check the status of an order with the given order ID. 
+* **IRIS Running Process Agent** 🤖: Assist to provide IRIS running processes details.(Process ID, NameSpace, Routine, state, PidExternal)
+* **IRIS Production Agent** 🤖: Assist to provide Production information, start and stop the production.
+* **WebSearch Agent** 🤖: Perform web searches to find relevant information.
+* **Order Agent** 🤖: Check the status of an order with the given order ID. 
 
 #### Handoffs
 Handoffs allow an agent to delegate tasks to another agent. This is particularly useful in scenarios where different agents specialize in distinct areas. For example, a customer support app might have agents that each specifically handle tasks like order status, refunds, FAQs, etc.
