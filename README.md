@@ -132,33 +132,39 @@ Triage agent is our main agent which delegate tasks to another agent based on us
 ## Application Workflow Process
 #### Vector Search Agent
 Vector Search Agent automatically ingests [New in InterSystems IRIS 2025.1](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GCRN_new20251) text information into IRIS Vector Store only once if the data doesn't already exist.
+![image](https://github.com/user-attachments/assets/932b02d2-82ce-46a4-a031-dbd05fc0d0d3)
 
 Use the query below to retrieve the data
 ```
-select 
+SELECT 
+id, embedding, document, metadata
+FROM SQLUser.AgenticAIRAG
 ```
 ![image](https://github.com/user-attachments/assets/81812797-b293-456c-911a-746a545be33c)
 
 The Triage Agent receives user input, routing the question to the Vector Search Agent.
 ![image](https://github.com/user-attachments/assets/66a5fac4-7a1d-4928-b615-29494b359c74)
 
-
-
+#### IRIS Dashboard Agent
 The Triage Agent receives user input, routing the question to the IRIS Dashboard Agent.
 ![image](https://github.com/user-attachments/assets/868fe832-fcd9-4d2c-907e-896787f52c39)
 
+#### IRIS Processes Agent
 The Triage Agent receives user input, routing the question to the IRIS Processes Agent.
 ![image](https://github.com/user-attachments/assets/cb941c66-e35b-4dd9-9d59-950d648a5eec)
 
+#### IRIS Production Agent
 Start and Stop the Production.
 ![image](https://github.com/user-attachments/assets/b44f3f79-e29c-49ea-9686-9a22289199ba)
 
 Get Production Details.
 ![image](https://github.com/user-attachments/assets/b356a29a-fcf9-4dfc-9d4a-8ce41fcd8dc6)
 
+#### Local Agent
 The Triage Agent receives user input, routing the question to the Local Order Agent.
 ![image](https://github.com/user-attachments/assets/83dff43f-8214-4e69-8c59-fa2abfa42d42)
 
+#### WebSearch Agent
 Here, the triage Agent receives two questions, routing both to the WebSearcg Agent.
 ![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
 
