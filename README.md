@@ -128,12 +128,20 @@ Triage agent is our main agent which delegate tasks to another agent based on us
         ),
         handoffs=[vector_search_agent,production_agent,dashboard_agent,processes_agent,order_agent,web_search_agent]
     )
-
-
 ```
-#### Application Workflow Process
-Vector Search Agent
+## Application Workflow Process
+#### Vector Search Agent
+Vector Search Agent automatically ingests [New in InterSystems IRIS 2025.1](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GCRN_new20251) text information into IRIS Vector Store only once if the data doesn't already exist.
+
+Use the query below to retrieve the data
+```
+select 
+```
 ![image](https://github.com/user-attachments/assets/81812797-b293-456c-911a-746a545be33c)
+
+The Triage Agent receives user input, routing the question to the Vector Search Agent.
+![image](https://github.com/user-attachments/assets/66a5fac4-7a1d-4928-b615-29494b359c74)
+
 
 
 The Triage Agent receives user input, routing the question to the IRIS Dashboard Agent.
