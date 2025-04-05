@@ -100,7 +100,7 @@ agent = Agent(
 ```
 The application contains 7 agents:
 * **Triage Agent** 🤖 : Main agent receives user input and delegates to other agent by using handoffs
-* **Vector Search Agent** : Provide IRIS 2025.1 Release notes details (RAG Functionality)
+* **Vector Search Agent** 🤖: Provide IRIS 2025.1 Release notes details (RAG Functionality)
 * **IRIS Dashboard Agent** 🤖: Assist in providing below management portal dashboard details:
 ( ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,
 JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurrentPct,		    LicenseHigh,LicenseHighPct,LicenseLimit,LicenseType,LockTable,.LogicalReads,Processes,		    RouRefs,SeriousAlerts,ShadowServer,ShadowSource,SystemUpTime,WriteDaemon)  
