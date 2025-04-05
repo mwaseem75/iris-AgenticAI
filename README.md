@@ -7,7 +7,7 @@ This application showcases the next generation of autonomous AI systems capable 
 
 
 # Application Structure
-![image](https://github.com/user-attachments/assets/6525c638-4708-4eb8-9b83-6411d8592d6a)
+![image](https://github.com/user-attachments/assets/2dd912f7-c467-4da1-85ac-d6d330207674)
 
 
 # Application Interface
@@ -26,6 +26,9 @@ Seamlessly coordinate multi-agent workflows by delegating tasks between speciali
 
 * **Function Tools** ⚒️
 Decorate any Python function with @tool to instantly integrate it into the agent’s toolkit.
+
+* **Vector Search (RAG)** 🧠
+Native integration of vector store (IRIS) for RAG retrieval.
 
 * **Tracing** 🔍
 Built-in tracing to visualize, debug, and monitor agent workflows in real time (think LangSmith alternatives).
@@ -69,7 +72,7 @@ docker-compose up -d
 
 ## Run Chainlit Web Application
 To run the Application, Navigate to [**http://localhost:8002**](http://localhost:8002) 
-![image](https://github.com/user-attachments/assets/2c4ad611-0e82-4c2a-ade5-1fd7f8d66465)
+![image](https://github.com/user-attachments/assets/bb93669c-2005-4378-9323-1c54236e4549)
 
 
 #### Agent
@@ -95,8 +98,9 @@ agent = Agent(
     tools=[get_weather],
 )
 ```
-Application contains 7 agents:
+The application contains 7 agents:
 * **Triage Agent** 🤖 : Main agent receives user input and delegates to other agent by using handoffs
+* **Vector Search Agent** 🤖: Provide IRIS 2025.1 Release notes details (RAG Functionality)
 * **IRIS Dashboard Agent** 🤖: Assist in providing below management portal dashboard details:
 ( ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,
 JournalEntries,JournalSpace,JournalStatus,last_backup,LicenseCurrent,LicenseCurrentPct,		    LicenseHigh,LicenseHighPct,LicenseLimit,LicenseType,LockTable,.LogicalReads,Processes,		    RouRefs,SeriousAlerts,ShadowServer,ShadowSource,SystemUpTime,WriteDaemon)  
@@ -110,36 +114,57 @@ Handoffs allow an agent to delegate tasks to another agent. This is particularly
 
 Triage agent is our main agent which delegate tasks to another agent based on user input
 ```
-triage_agent = Agent(
+    #TRIAGE AGENT, Main agent receives user input and delegates to other agent by using handoffs
+    triage_agent = Agent(
         name="Triage agent",
         instructions=(
             "Handoff to appropriate agent based on user query."
+            "if they ask about Release Notes, handoff to the vector_search_agent."
             "If they ask about production, handoff to the production agent."
             "If they ask about dashboard, handoff to the dashboard agent."
-            "If they ask about process, handoff to the processes agent." 
-            "Use the WebSearchAgent tool to find information related to the user's query."           
+            "If they ask about process, handoff to the processes agent."     
+            "use the WebSearchAgent tool to find information related to the user's query and do not use this agent is query is about Release Notes."               
             "If they ask about order, handoff to the order_agent."            
         ),
-        handoffs=[production_agent,dashboard_agent,processes_agent,web_search_agent,order_agent]
+        handoffs=[vector_search_agent,production_agent,dashboard_agent,processes_agent,order_agent,web_search_agent]
     )
-
 ```
-#### Application Workflow Process
+## Application Workflow Process
+#### Vector Search Agent
+Vector Search Agent automatically ingests [New in InterSystems IRIS 2025.1](https://docs.intersystems.com/irislatest/csp/docbook/DocBook.UI.Page.cls?KEY=GCRN_new20251) text information into IRIS Vector Store only once if the data doesn't already exist.
+![image](https://github.com/user-attachments/assets/932b02d2-82ce-46a4-a031-dbd05fc0d0d3)
+
+Use the query below to retrieve the data
+```
+SELECT 
+id, embedding, document, metadata
+FROM SQLUser.AgenticAIRAG
+```
+![image](https://github.com/user-attachments/assets/81812797-b293-456c-911a-746a545be33c)
+
+The Triage Agent receives user input, routing the question to the Vector Search Agent.
+![image](https://github.com/user-attachments/assets/66a5fac4-7a1d-4928-b615-29494b359c74)
+
+#### IRIS Dashboard Agent
 The Triage Agent receives user input, routing the question to the IRIS Dashboard Agent.
 ![image](https://github.com/user-attachments/assets/868fe832-fcd9-4d2c-907e-896787f52c39)
 
+#### IRIS Processes Agent
 The Triage Agent receives user input, routing the question to the IRIS Processes Agent.
 ![image](https://github.com/user-attachments/assets/cb941c66-e35b-4dd9-9d59-950d648a5eec)
 
+#### IRIS Production Agent
 Start and Stop the Production.
 ![image](https://github.com/user-attachments/assets/b44f3f79-e29c-49ea-9686-9a22289199ba)
 
 Get Production Details.
 ![image](https://github.com/user-attachments/assets/b356a29a-fcf9-4dfc-9d4a-8ce41fcd8dc6)
 
+#### Local Agent
 The Triage Agent receives user input, routing the question to the Local Order Agent.
 ![image](https://github.com/user-attachments/assets/83dff43f-8214-4e69-8c59-fa2abfa42d42)
 
+#### WebSearch Agent
 Here, the triage Agent receives two questions, routing both to the WebSearcg Agent.
 ![image](https://github.com/user-attachments/assets/241f5270-6f7e-4556-89b2-1f51e2553353)
 
