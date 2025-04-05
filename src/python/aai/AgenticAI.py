@@ -5,8 +5,10 @@ import chainlit as cl
 from agents import Agent, Runner, WebSearchTool
 from agents.run import RunConfig
 from agents.tool import function_tool
+from irisRAG import RagOpr
 import IrisUtil
 
+ragOprRef = RagOpr()
 # Load the environment variables from the .env file
 load_dotenv()
 
@@ -48,6 +50,34 @@ async def start():
         tracing_disabled=True
     )
 
+
+    #Vector Search (RAG) Agent
+    @function_tool
+    @cl.step(name = "Vector Search Agent (RAG)", type="tool", show_input = False)
+    async def iris_RAG_search():
+            """Provide IRIS Release Notes details,IRIS 2025.1 Release Notes, IRIS Latest Release Notes, Release Notes"""
+            if not ragOprRef.check_VS_Table():
+                 #Ingest the document first
+                 msg = cl.user_session.get("ragclmsg")
+                 msg.content = "Ingesting Vector Data..."
+                 await msg.update()
+                 ragOprRef.ingestDoc()
+            
+            if ragOprRef.check_VS_Table():
+                 msg = cl.user_session.get("ragclmsg")
+                 msg.content = "Searching Vector Data..."
+                 await msg.update()                 
+                 return ragOprRef.ragSearch(cl.user_session.get("ragmsg"))   
+            else:
+                 return "Error while getting RAG data"                    
+
+    vector_search_agent = Agent(
+            name="RAGAgent",
+            handoff_description="Specialist agent for Release Notes",
+            instructions="You provide assistance with Release Notes. Explain important events and context clearly.",
+            tools=[iris_RAG_search]
+    )
+
     #PRODUCTION AGENT AND HIS TOOLS
     #Assist to provide Production information, start and stop the production.
     @function_tool
@@ -77,6 +107,7 @@ async def start():
 
     production_agent = Agent(
             name="ProductionAgent",
+            handoff_description="Specialist agent for Production Status, Production Details, Start and Stop the Production",
             instructions="Assist to provide production details, Start production and stop production.\
             Call check_production_status tool when user asked about production status \
             Call start_production tool when user asked to start production \
@@ -95,6 +126,7 @@ async def start():
 
     dashboard_agent = Agent(
             name="DashboardAgent",
+            handoff_description="Specialist agent for management Portal dashboard details",
             instructions="Assist in providing management portal dashboard details\
             ApplicationErrors,CSPSessions,CacheEfficiency,DatabaseSpace,DiskReads,DiskWrites,\
 		    ECPAppServer,ECPAppSrvRate,ECPDataServer,ECPDataSrvRate,GloRefs,GloRefsPerSec,GloSets,\
@@ -109,12 +141,13 @@ async def start():
     @function_tool
     @cl.step(name = "Process Info Agent", type="tool",  show_input = False)
     def process_info():
-            """Provide Management Portal Dashboard information"""
+            """Provide IRIS Process information"""
             content = IrisUtil.get_processes()            
             return content
 
     processes_agent = Agent(
             name="ProcessesAgent",
+            handoff_description="Specialist agent for IRIS running processes",
             instructions="Assist to provide IRIS running processes details.\
             Process ID, NameSpace, Routine, state, PidExternal"  ,      
             tools=[process_info]
@@ -122,7 +155,7 @@ async def start():
 
     #WEBSEARCH AGENT, Perform web searches to find relevant information.
     web_search_agent = Agent(
-        name="WebSearchAgent",
+        name="WebSearchAgent",        
         instructions="Perform web searches to find relevant information.",
         tools=[WebSearchTool()]
     )
@@ -151,16 +184,18 @@ async def start():
         name="Triage agent",
         instructions=(
             "Handoff to appropriate agent based on user query."
+            "if they ask about Release Notes, handoff to the vector_search_agent."
             "If they ask about production, handoff to the production agent."
             "If they ask about dashboard, handoff to the dashboard agent."
-            "If they ask about process, handoff to the processes agent." 
-            "use the WebSearchAgent tool to find information related to the user's query."           
+            "If they ask about process, handoff to the processes agent."     
+            "use the WebSearchAgent tool to find information related to the user's query and do not use this agent is query is about Release Notes."               
             "If they ask about order, handoff to the order_agent."            
         ),
-        handoffs=[production_agent,dashboard_agent,processes_agent,web_search_agent,order_agent]
+        handoffs=[vector_search_agent,production_agent,dashboard_agent,processes_agent,order_agent,web_search_agent]
     )
 
-      
+
+
     """Set up the chat session when a user connects."""
     # Initialize an empty chat history in the session.
     cl.user_session.set("chat_history", [])
@@ -169,6 +204,7 @@ async def start():
     
      
     WelcomeMsg = "Welcome to the IRIS AI Assistant! I can assist you to provide:\n" \
+                "- Provide IRIS 2025.1 Release notes details (RAG Functionality)\n" \
                 "- IRIS Management Portal dashboard information\n" \
                 "- Information about currently running processes\n" \
                 "- Get Production details, Start and Stop the production.\n" \
@@ -195,6 +231,9 @@ async def main(message: cl.Message):
     # Append the user's message to the history.
     history.append({"role": "user", "content": message.content})
     
+    # Used by RAG agent
+    cl.user_session.set("ragmsg", message.content)
+    cl.user_session.set("ragclmsg", msg)
 
     try:
         print("\n[CALLING_AGENT_WITH_CONTEXT]\n", history, "\n")

@@ -1,5 +1,7 @@
 openai-agents
 chainlit
+langchain-iris
+langchain-openai
 sqlalchemy-iris
 pandas
 uv

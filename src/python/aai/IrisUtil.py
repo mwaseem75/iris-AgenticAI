@@ -53,7 +53,7 @@ def get_processes():
         '''
 	statement = iris.sql.exec(query)
 	df = statement.dataframe()
-		
+
 	return json.loads(df.to_json(orient="split"))
 
 #Get dashboard statistics

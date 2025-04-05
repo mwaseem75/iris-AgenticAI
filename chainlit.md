@@ -3,7 +3,7 @@
 Hi there, The rise of agentic AI marks a transformative leap in how artificial intelligence interacts with the world—moving beyond static responses to dynamic, goal-driven problem-solving. Powered by [OpenAI’s Agentic SDK](https://openai.github.io/openai-agents-python/) 📚 , this application showcases the next generation of autonomous AI systems capable of reasoning, collaborating, and executing complex tasks with human-like adaptability.
 
 ## Applicaion Features 🔗
-
+- Release Notes Agent (RAG Functionality)
 - IRIS Management Portal Dashboard Agent
 - IRIS Running Process Monitoring Agent
 - IRIS Production Information Agent
