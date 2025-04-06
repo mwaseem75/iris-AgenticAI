@@ -231,7 +231,7 @@ if __name__ == "__main__":
 ## MCP application
 The application communicates with the MCP Server, which runs locally at localhost.
 MCP application is running at http://localhost:8001
-![image](https://github.com/user-attachments/assets/1fbacf2d-d60b-4683-aaab-817d0ce73695)
+![image](https://github.com/user-attachments/assets/a695cb6d-b88d-456c-896b-bed1fa4dd846)
 
 #### Starting the MCP application
 **NOTE:** In case of "Page isn't working error", manually start the application by using the following Docker command:
@@ -240,7 +240,11 @@ chainlit run /irisdev/app/src/python/aai/MCPapp.py -h --port 8001 --host 0.0.0.0
 ```
 ![image](https://github.com/user-attachments/assets/f2003c1f-5fbc-40ed-8ef7-160497a3aea2)
 
+#### MCP Server Vector Search (RAG) functionality
+The MCP Server is equipped with InterSystems IRIS vector search ingestion capabilities and Retrieval-Augmented Generation (RAG) functionality.
+![image](https://github.com/user-attachments/assets/5e70b121-e24f-4c96-9e31-2dd6b094311b)
 
+#### MCP Server other functionality
 The MCP Server dynamically delegates tasks to the appropriate tool based on user input.
 ![image](https://github.com/user-attachments/assets/41fd5443-6da3-495d-8264-0af4390c3ece)
 
