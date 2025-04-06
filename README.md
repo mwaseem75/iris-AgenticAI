@@ -7,7 +7,7 @@ This application showcases the next generation of autonomous AI systems capable 
 
 
 # Application Structure
-![image](https://github.com/user-attachments/assets/2dd912f7-c467-4da1-85ac-d6d330207674)
+![image](https://github.com/user-attachments/assets/85bc80eb-5d6f-49a4-bb3c-3ed66c44adc4)
 
 
 # Application Interface
@@ -184,10 +184,12 @@ uv run python /irisdev/app/src/python/aai/runMCPServer.py
 ```
 
 The MCP Server is equipped with the following tools:
+* Provide IRIS 2025.1 Release notes details (RAG Functionality)
 * IRIS Info tool
 * Check Weather tool
 * Find secret word tool (Local function)
 * Addition Tool (Local function)
+
 ```
 import random,iris
 import requests
