@@ -1,24 +1,23 @@
-InterSystems IRIS 2025.1 Release notes
+InterSystems IRIS 2025.1 Release notes, New in InterSystems IRIS 2025.1
 
-New in InterSystems IRIS 2025.1
 This page describes the new features, enhancements, and other significant updates in the 2025.1 release of InterSystems IRIS® data platform, which is an extended maintenance (EM) release.
 
 For other information you may wish to consider related to changes included in this release, see Known Issues and Notes. For a more exhaustive list of the changes included in this release, refer to the Upgrade ChecklistOpens in a new tab.
 
-Release Information for 2025.1
+* Release Information for 2025.1
 The current release is 2025.1. The posting for 2025.1 is build 2025.1.0.223.0.
 
-Enhancing Developer Experience
-Python Support in DTL Editor
+* Enhancing Developer Experience
+** Python Support in DTL Editor
 This release of InterSystems IRIS introduces the capability to leverage Python statements in your Data Transformation Language (DTL) classes. For each action, users can select the language (ObjectScript or Python) enabling developers who are skilled in Python to utilize larger parts of the platform with their existing skill set.
 
-Enhancing Analytics and AI
-Approximate Nearest Neighbor Index for Vector Search
+* Enhancing Analytics and AI
+** Approximate Nearest Neighbor Index for Vector Search
 InterSystems IRIS Vector Search now features a disk-based Approximate Nearest Neighbor (ANN) index for VECTOR—typed columns. The ANN index is based on the popular Hierarchical Networked Small Worlds (HNSW) algorithm. It yields sub-second similarity query response times over millions of vectors, providing a 2,500 times speedup in performance compared to the "brute force" non-indexed vector search, when searching over 100 million vectors.
 
 When creating the ANN index, the user must choose which similarity function will be used (either VECTOR_DOT_PRODUCT or VECTOR_COSINE) to query the data. The ANN also supports incremental updates, and can be used in combination with the %EMBEDDING index.
 
-Updates to Business Intelligence Cube Building and Synchronization
+** Updates to Business Intelligence Cube Building and Synchronization
 This release includes changes to the InterSystems IRIS Business Intelligence cube building process to provide safeguards for updating related cube dependency chains and other enhancements that address several customer-reported issues in this area. To ensure that analysis of cube builds is always taken into consideration and that data remains consistent, the base functions for cube building and synchronization (%BuildCube and %SynchronizeCube) now perform cube dependency analysis automatically and execute a full model group update. This new procedure includes:
 
 Analyzing the requested cube to see if there are any relationship dependencies and then internally establishing a full list of cubes that need to be updated, along with appropriate build orders for that cube list.
@@ -31,96 +30,93 @@ These changes also include logging of all events recorded for all cubes built in
 
 If you are upgrading to this release from a previous one, these changes may affect the behavior of your custom cube update tasks or methods. Refer to Special Considerations When Upgrading for more information.
 
-Enhancing SQL and Data Management
-New syntax for server-side pagination
+* Enhancing SQL and Data Management
+** New syntax for server-side pagination
 InterSystems IRIS SQL has long supported the TOP keyword to limit query results only to the first n records of a sorted result set. With this release, InterSystems adds support for two alternative syntax flavors: LIMIT ... OFFSET ..., which is commonly used in other database platforms, and OFFSET ... FETCH ..., which is the official ANSI standard. By offering all three methods of server-side pagination, InterSystems has made it easier for new customers and users migrating to InterSystems IRIS to write efficient queries.
 
-Better bulk Import of DDL statements
+** Better bulk Import of DDL statements
 Based on customer feedback on the LOAD DATA command, InterSystems IRIS SQL now supports a similar LOAD SQL command to load and execute any number of SQL DDL statements from a file or directory. This new command offers a simple entry point for developers accessing the system over SQL and writes detailed output, either to the SQL DiagnosticsOpens in a new tab table or another log file.
 
 The pre-existing ObjectScript entry pointsOpens in a new tab have also been enhanced to support the diagnostic output.
 
-In-place conversion between row and columnar table layout
+** In-place conversion between row and columnar table layout
 This release extends the ALTER TABLE ... CONVERT command to support conversion between row and columnar table layouts. Users can choose to convert the whole table or a subset of columns. Queries and DML (INSERT, UPDATE, and DELETE) commands can still be executed while the table conversion is taking place. Please see ALTER TABLE for more details on the conversion process.
 
-Additional SQL functions
+** Additional SQL functions
 This release introduces two new convenience functions to the InterSystems SQL dialect:
 
 APPROX_COUNT_DISTINCT() is a new aggregate function that implements the HyperLogLog algorithm, which offers users an estimate of the number of distinct values for a particular column that is orders of magnitude faster than the exact result obtained from a COUNT(DISTINCT) command.
 
 HASHBYTES() offers a convenient SQL entry point for common hash functions, such as SHA256.
 
-Enhancing Speed, Scale, and Security
-Smaller journal records
+*Enhancing Speed, Scale, and Security
+** Smaller journal records
 The 2025.1 release improves the scalability of $INCREMENT and introduces a new, more compact journal file format. The new format uses less I/O bandwidth (due to the smaller journal record size) on average and includes changes to the way that $INCREMENT is recorded in the journal. Journal files created on a 2025.1 instance cannot be opened on an instance running a prior release, so be sure to keep track of which mirror members are upgraded. Applications that have implemented custom logic to read and interpret journal files should be reviewed to determine whether this logic is impacted by the new $INCREMENT handling discussed in Special Considerations When Upgrading; most such custom logic is not impacted.
 
-Faster database compaction
+** Faster database compaction
 This release includes a number of enhancements to increate the efficiency of database compactionOpens in a new tab and defragmentation. Especially for large databases with lots of big strings, the compaction process now runs significantly faster and is better aligned with any concurrent block allocation for application workloads.
 
-Download mirror database
+** Download mirror database
 Previously, adding a database to a mirror required following a manual process copying the database file to the other mirror members, coordinated with API calls to register the database. Starting with this release, the new database can be created automatically on all mirror members and global data is downloaded automatically, without requiring file copies. These improvements significantly simplify the setup of complex mirrored environments, although attention should be paid to the size of the database being added to the mirror, as file copies may still be a practical solution when the database being added already contains a large amount of data. Please refer to the API reference for more details on the new option.
 
-Command-line ECP management utility
+** Command-line ECP management utility
 This release introduces a new ^ECP command line utility to perform common ECP management tasks, similar to existing ^SECURITY and ^DATABASE utilities. This means administrators of ECP environments no longer need to rely on the Management Portal for most configuration tasks.
 
-FIPS 140–3
+** FIPS 140–3
 InterSystems can now interact with the cryptographic libraries of FIPS 140–3. Previous versions supported FIPS 140–2, so this is an important upgrade for users that require the latest FIPS-compliant libraries.
 
-Other Enhancements and Efficiency Improvements
-Observability with OpenTelemetry
+* Other Enhancements and Efficiency Improvements
+* Observability with OpenTelemetry
 The 2024.3 release included a built-in exporter for OpenTelemetry that collected both metrics published in the Open Metrics API and structured logs. Your applications can add to these metrics and logs with other existing APIs.
 
 The 2025.1 release further adds the ability to publish traces. Each trace describes the steps and timing used to handle requests. Typically, these start with a web request and can be used to show how long each part of your request takes to process. Basic tracing can be turned on simply. If you want more than the basic information, you can further augment your application.
 
-The following image shows what trace information looks like.
-
-generated description: new202251 opentel
-Updated Interfaces for Production Configuration and DTL Editor Applications
+* Updated Interfaces for Production Configuration and DTL Editor Applications
 The user interfaces for the Production Configuration and DTL Editor applications have been updated to provide modern user experiences. Changes are limited to these two applications, not broader functionality, and are further explained below. All other screens remain in the Standard user interface. You can flexibly switch between the modernized and standard views.
 
-Production Configuration
+* Production Configuration
 See Introduction to Configuration Tasks for more information.
 
-Production Configuration: Supported in this version of production configuration: Creating/Editing/Copying/Deleting Hosts / Stop/Start Hosts / Editing Production Settings / Stop/Start Productions.
+** Production Configuration: Supported in this version of production configuration: Creating/Editing/Copying/Deleting Hosts / Stop/Start Hosts / Editing Production Settings / Stop/Start Productions.
 
-Source Control Integration: Support for source control integration for the above configuration functionality is available.
+** Source Control Integration: Support for source control integration for the above configuration functionality is available.
 
-Split Panel View: Users can open the Rule Editor and DTL Editor directly from the Production Configuration screen to edit and view rules and transformations included in the production in a split-panel view.
+** Split Panel View: Users can open the Rule Editor and DTL Editor directly from the Production Configuration screen to edit and view rules and transformations included in the production in a split-panel view.
 
-Enhanced Filtering: A search box at the top enables you to search and filter across all business components, including multiple categories, DTLs, and sub-tranforms. Use the left sidebar to search independently of the main panel to view search results across hosts and categories.
+** Enhanced Filtering: A search box at the top enables you to search and filter across all business components, including multiple categories, DTLs, and sub-tranforms. Use the left sidebar to search independently of the main panel to view search results across hosts and categories.
 
-Bulk-Editing Host Categories: You can add a new category or edit an existing category for a production by adding hosts from the production configuration.
+** Bulk-Editing Host Categories: You can add a new category or edit an existing category for a production by adding hosts from the production configuration.
 
-Expandable Routers: Routers can be expanded to view all rules, transformations, and connections inline.
+** Expandable Routers: Routers can be expanded to view all rules, transformations, and connections inline.
 
-Reworked Host Connection: Direct and indirect connections are not rendered when a business host is selected, allowing you to see the full path a message can take. Hover over any outbound or inbound host for further differentiating connections. The Show Connected Hosts Only toggle filters on the selected hosts and its connections.
+** Reworked Host Connection: Direct and indirect connections are not rendered when a business host is selected, allowing you to see the full path a message can take. Hover over any outbound or inbound host for further differentiating connections. The Show Connected Hosts Only toggle filters on the selected hosts and its connections.
 
-DTL Editor
-See Introduction to DTL Tools for more information.
+* DTL Editor
+** See Introduction to DTL Tools for more information.
 
-Source Control Integration: Support for source control integration is available.
+** Source Control Integration: Support for source control integration is available.
 
-VS Code Integration: Users can view this version of the DTL Editor in their VS Code IDE.
+** VS Code Integration: Users can view this version of the DTL Editor in their VS Code IDE.
 
-Embedded Python Support: Embedded Python support extends to this version of the DTL Editor.
+** Embedded Python Support: Embedded Python support extends to this version of the DTL Editor.
 
-DTL Testing: DTL Test utility is available in this version of the DTL Editor.
+** DTL Testing: DTL Test utility is available in this version of the DTL Editor.
 
-Switch Panel Layout: The DTL editor supports a side-to-side and top-to-bottom layout.
+** Switch Panel Layout: The DTL editor supports a side-to-side and top-to-bottom layout.
 
-Undo/Redo: Users and undo and redo all actions that have not yet been saved with the undo and redo buttons.
+** Undo/Redo: Users and undo and redo all actions that have not yet been saved with the undo and redo buttons.
 
-Generate Empty Segments Parameter: The new GENERATEEMPTYSTATEMENTS parameter generates empty segments for missing fields.
+** Generate Empty Segments Parameter: The new GENERATEEMPTYSTATEMENTS parameter generates empty segments for missing fields.
 
-Sub-transforms Viewing: Users can view sub-transforms by clicking the eye-shaped icon to open the sub-transform DTL in a new tab.
+** Sub-transforms Viewing: Users can view sub-transforms by clicking the eye-shaped icon to open the sub-transform DTL in a new tab.
 
-Scrolling: The DTL Editor now offers independent scrolling and joint scrolling. With independent scrolling, the left (source) and right (target) sections of the DTL editor can be scrolled independently by positioning the cursor above once of the sections and using the scroll wheel or trackpad to move through each section separately. With joint scrolling, you can scroll through both the source and target sections by placing the cursor in the middle of the diagram.
+** Scrolling: The DTL Editor now offers independent scrolling and joint scrolling. With independent scrolling, the left (source) and right (target) sections of the DTL editor can be scrolled independently by positioning the cursor above once of the sections and using the scroll wheel or trackpad to move through each section separately. With joint scrolling, you can scroll through both the source and target sections by placing the cursor in the middle of the diagram.
 
-Field Autocomplete: Autocomplete is available for source, target, and condition fields, as well as for the Source Class, Source Doc Type, Target Class, and Target Doc Type.
+** Field Autocomplete: Autocomplete is available for source, target, and condition fields, as well as for the Source Class, Source Doc Type, Target Class, and Target Doc Type.
 
-Ordinal Numbering: The visual editor allows you to toggle on and off the view of the ordinal numbers and full path expression for each segment.
+** Ordinal Numbering: The visual editor allows you to toggle on and off the view of the ordinal numbers and full path expression for each segment.
 
-East References: When a field in the Action Editor is focused, double clicking a segment in the Graphical Editor inserts the corresponding segment reference at the current cursor position in the Action Editor.
+** East References: When a field in the Action Editor is focused, double clicking a segment in the Graphical Editor inserts the corresponding segment reference at the current cursor position in the Action Editor.
 
-Synchronization: Click an element in the visual editor to highlight the corresponding row in the action editor.
+** Synchronization: Click an element in the visual editor to highlight the corresponding row in the action editor.
 

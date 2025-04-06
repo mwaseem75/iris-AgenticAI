@@ -21,6 +21,7 @@ if not openai_api_key:
 async def start():
       
     WelcomeMsg = "Welcome to the IRIS MCP Assistant! I can assist you to provide:\n" \
+                "- Provide IRIS 2025.1 Release notes details (RAG Functionality)\n" \
                 "- Weather Information. e.g(What's the weather in Tokyo?)\n" \
                 "- Get IRIS version. e.g(Provide me IRIS version details)\n" \
                 "- Find secret word. e.g(What is the secret word?)\n" \

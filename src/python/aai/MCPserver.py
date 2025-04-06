@@ -1,6 +1,9 @@
 import random,iris
 import requests
+from irisRAG import RagOpr
 from mcp.server.fastmcp import FastMCP
+
+ragOprRef = RagOpr()
 
 # Create server
 mcp = FastMCP("Echo Server")
@@ -32,6 +35,21 @@ def get_current_weather(city: str) -> str:
     endpoint = "https://wttr.in"
     response = requests.get(f"{endpoint}/{city}")
     return response.text
+
+#IRIS Vector Search (RAG)
+#Ingest and perform vector search on IRIS 2025.1 Relese Notes 
+@mcp.tool()
+def get_release_notes(msg: str) -> str:
+    print(f"[debug-server] get_release_notes({msg})")
+   
+    if not ragOprRef.check_VS_Table():
+        #Ingest the document first
+        ragOprRef.ingestDoc()
+
+    if ragOprRef.check_VS_Table():    
+        return ragOprRef.ragSearch(msg)   
+    else:
+        return "Error while getting RAG data"                        
 
 
 if __name__ == "__main__":
